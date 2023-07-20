@@ -24,14 +24,15 @@ entity ActivityGroup {
     key name        : String(30);
         activity    : Association to Activity;
         description : String(256);
-        owner       : Association to User on owner.name = owner_name; // to one association
+        owner       : Association to User
+                          on owner.name = owner_name; // to one association
         owner_name  : type of User : name;
         members     : Composition of many Members
                           on members.activityGroup = $self; // to many association
 };
 
 
-entity Members { // link table
+entity Members { // link table        
     key activityGroup : Association to ActivityGroup;
     key user          : Association to User;
 }

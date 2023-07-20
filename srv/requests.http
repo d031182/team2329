@@ -1,3 +1,16 @@
 
 
-GET https://port4004-workspaces-ws-t7j7g.eu10.applicationstudio.cloud.sap/fun-org/User
+#### GET User
+GET http://localhost:4004/fun-org/User
+
+
+#### GET Activity Group
+GET http://localhost:4004/fun-org/ActivityGroup
+
+### GET Activity Group and expand
+GET http://localhost:4004/fun-org/ActivityGroup?$expand=members
+
+
+#### GET Member
+GET http://localhost:4004/fun-org/Members
+
