@@ -12,19 +12,20 @@ entity Activity {
 };
 
 entity User {
-    key name            : String(30);
-        gender          : String(1);
-        birthYear       : Integer;
-        location        : String(30);        
-        members         : Composition of many Members
-                              on members.user = $self;  // to many association
+    key name      : String(30);
+        gender    : String(1);
+        birthYear : Integer;
+        location  : String(30);
+        members   : Composition of many Members
+                        on members.user = $self; // to many association
 };
 
 entity ActivityGroup {
     key name        : String(30);
         activity    : Association to Activity;
         description : String(256);
-        owner       : Association to User; // to one association
+        owner       : Association to User on owner.name = owner_name; // to one association
+        owner_name  : type of User : name;
         members     : Composition of many Members
                           on members.activityGroup = $self; // to many association
 };
