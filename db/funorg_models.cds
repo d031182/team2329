@@ -12,15 +12,17 @@ entity Activity {
 };
 
 entity User {
-    name : String(30);
-    gender: String(1);
-    birthYear: String(4);
-    location : String (30);        
+    key name      : String(30);
+        gender    : String(1);
+        birthYear : Integer;
+        location  : String(30); 
+        activatityGroup : Association to ActivityGroup;       
 };
 
 entity ActivityGroup {
-        // key INTHeader : association to Interactions_Header;
-    key ID          : Integer;
-        name        : String(30);
+    // key INTHeader : association to Interactions_Header;
+    key name        : String(30);
+        activity    : Association to Activity;
         description : String(256);
+        owner       : Association to User;   // to one association                 
 };

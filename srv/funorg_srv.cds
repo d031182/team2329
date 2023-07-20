@@ -5,5 +5,8 @@ service FunOrgService {
     as projection on datamodels.Activity;
 
  entity User
+    as projection on  datamodels.User;
+
+entity ActivityGroup
     as projection on  datamodels.ActivityGroup;
 }

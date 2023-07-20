@@ -1,1 +1,3 @@
-name,gender,birthYear,location
+name,gender,birthYear,location,activatityGroup_name
+"San","m",1979,"Germany", "SansFirstGroup"
+"Michael","m",1980,"Germany", "SansFirstGroup"
