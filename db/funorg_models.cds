@@ -12,17 +12,25 @@ entity Activity {
 };
 
 entity User {
-    key name      : String(30);
-        gender    : String(1);
-        birthYear : Integer;
-        location  : String(30); 
-        activatityGroup : Association to ActivityGroup;       
+    key name            : String(30);
+        gender          : String(1);
+        birthYear       : Integer;
+        location        : String(30);        
+        members         : Composition of many Members
+                              on members.user = $self;  // to many association
 };
 
 entity ActivityGroup {
-    // key INTHeader : association to Interactions_Header;
     key name        : String(30);
         activity    : Association to Activity;
         description : String(256);
-        owner       : Association to User;   // to one association                 
+        owner       : Association to User; // to one association
+        members     : Composition of many Members
+                          on members.activityGroup = $self; // to many association
 };
+
+
+entity Members { // link table
+    key activityGroup : Association to ActivityGroup;
+    key user          : Association to User;
+}
