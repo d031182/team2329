@@ -11,14 +11,22 @@ entity Activity {
         description : String(256);
         date        : Date;
         location    : String(30);
-        category    : String(30);
+        category    : Association to Category on category.ID = category_ID;
+        category_ID : type of Category : ID;
 };
+
+entity Category {
+    key ID   : String(5);
+        name : String(30);
+}
 
 entity User {
     key name      : String(30);
         gender    : String(1);
         birthYear : Integer;
         location  : String(30);
+        interest  : Association to Category on interest.ID = interest_ID;
+        interest_ID : type of Category:ID;
         members   : Composition of many Members
                         on members.user = $self; // to many association
 };

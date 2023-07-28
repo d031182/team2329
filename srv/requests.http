@@ -21,29 +21,22 @@ GET http://localhost:4004/fun-org/Members
 
 
 
-#### GET User to join ActivityGroup
+#### find Users to join
 ####    location = Tel Aviv
-####    birthyear = 1979
-####    gender = m
-GET http://localhost:4004/fun-org/User?$filter=location eq 'Tel Aviv' and birthYear eq 1979 and gender eq 'm'
+####    interest = music
+GET http://localhost:4004/fun-org/User?$filter=location eq 'Tel Aviv' and interest_ID eq 'music'
 
-
-#### GET User to join ActivityGroup
-POST http://localhost:4004/fun-org/User?$filter=location eq 'Tel Aviv' and birthYear eq 1979 and gender eq 'm'
-
-
-#### GET Activity matching user for September
-GET http://localhost:4004/fun-org/Activity?$filter=date eq 2023-09-01
-
-#### GET Activity matching user for 
+#### find Activities to create new ActivityGroup
 ####    date = September
 ####    location = Tel Aviv
-GET http://localhost:4004/fun-org/Activity?$filter=date eq 2023-09-01 and location eq 'Tel Aviv'
+####    category = music
+GET http://localhost:4004/fun-org/Activity?$filter=date eq 2023-09-01 and location eq 'Tel Aviv' and category_ID eq 'food'
 
 
-#### GET Activity Group matching user profile, 
+#### find Activity Group to join, 
 ####    date = September 2023
 ####    location = Walldorf 
-GET http://localhost:4004/fun-org/ActivityGroup?$expand=owner,activity&$filter=activity/date eq 2023-09-01
+####    category = music
+GET http://localhost:4004/fun-org/ActivityGroup?$expand=owner,activity&$filter=activity/date eq 2023-09-01 and activity/category_ID eq 'music' 
 
 
