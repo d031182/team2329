@@ -1,7 +1,9 @@
-
-
 #### GET User
 GET http://localhost:4004/fun-org/User
+
+
+#### GET Activity
+GET http://localhost:4004/fun-org/Activity
 
 
 #### GET Activity Group
@@ -14,4 +16,20 @@ GET http://localhost:4004/fun-org/ActivityGroup?$expand=members
 
 #### GET Member
 GET http://localhost:4004/fun-org/Members
+
+
+
+
+
+#### GET User matching activitygroup
+GET http://localhost:4004/fun-org/User
+
+
+#### GET Activity matching user
+GET http://localhost:4004/fun-org/Activity
+
+
+#### GET Activity Group matching user profile
+GET http://localhost:4004/fun-org/ActivityGroup
+
 
