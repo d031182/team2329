@@ -9,7 +9,9 @@ entity Activity {
     key ID          : Integer;
         name        : String(30);
         description : String(256);
-        date   : Date
+        date        : Date;
+        location    : String(30);
+        category    : String(30);
 };
 
 entity User {
@@ -33,7 +35,7 @@ entity ActivityGroup {
 };
 
 
-entity Members { // link table        
+entity Members { // link table
     key activityGroup : Association to ActivityGroup;
     key user          : Association to User;
 }
