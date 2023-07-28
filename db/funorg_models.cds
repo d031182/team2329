@@ -9,6 +9,7 @@ entity Activity {
     key ID          : Integer;
         name        : String(30);
         description : String(256);
+        date   : Date
 };
 
 entity User {
