@@ -25,11 +25,14 @@ GET http://localhost:4004/fun-org/Members
 GET http://localhost:4004/fun-org/User
 
 
-#### GET Activity matching user
-GET http://localhost:4004/fun-org/Activity
+#### GET Activity matching user for September
+GET http://localhost:4004/fun-org/Activity?$filter=date eq 2023-09-01
+
+#### GET Activity matching user for October
+GET http://localhost:4004/fun-org/Activity?$filter=date eq 2023-10-01
 
 
 #### GET Activity Group matching user profile
-GET http://localhost:4004/fun-org/ActivityGroup
+GET http://localhost:4004/fun-org/ActivityGroup?$expand=owner,activity&$filter=activity/date eq 2023-09-01
 
 

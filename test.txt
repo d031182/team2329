@@ -1,3 +1,4 @@
 tesat
 test input
 san
+cds bind -2 FunOrganizer-hdiFunOrganizer-db-deployer-ws-t7j7g:SharedDevKey
