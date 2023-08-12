@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="FunOrgService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Activity" EntityType="FunOrgService.Activity"/>
+                <EntitySet Name="User" EntityType="FunOrgService.User">
+                    <NavigationPropertyBinding Path="members" Target="Members"/>
+                </EntitySet>
+                <EntitySet Name="ActivityGroup" EntityType="FunOrgService.ActivityGroup">
+                    <NavigationPropertyBinding Path="activity" Target="Activity"/>
+                    <NavigationPropertyBinding Path="owner" Target="User"/>
+                    <NavigationPropertyBinding Path="members" Target="Members"/>
+                </EntitySet>
+                <EntitySet Name="Members" EntityType="FunOrgService.Members">
+                    <NavigationPropertyBinding Path="activityGroup" Target="ActivityGroup"/>
+                    <NavigationPropertyBinding Path="user" Target="User"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Activity">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="30"/>
+                <Property Name="description" Type="Edm.String" MaxLength="256"/>
+                <Property Name="date" Type="Edm.Date"/>
+                <Property Name="location" Type="Edm.String" MaxLength="30"/>
+                <Property Name="category" Type="Edm.String" MaxLength="30"/>
+            </EntityType>
+            <EntityType Name="User">
+                <Key>
+                    <PropertyRef Name="name"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="gender" Type="Edm.String" MaxLength="1"/>
+                <Property Name="birthYear" Type="Edm.Int32"/>
+                <Property Name="location" Type="Edm.String" MaxLength="30"/>
+                <NavigationProperty Name="members" Type="Collection(FunOrgService.Members)" Partner="user">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ActivityGroup">
+                <Key>
+                    <PropertyRef Name="name"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <NavigationProperty Name="activity" Type="FunOrgService.Activity">
+                    <ReferentialConstraint Property="activity_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="activity_ID" Type="Edm.Int32"/>
+                <Property Name="description" Type="Edm.String" MaxLength="256"/>
+                <NavigationProperty Name="owner" Type="FunOrgService.User">
+                    <ReferentialConstraint Property="owner_name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="owner_name" Type="Edm.String" MaxLength="30"/>
+                <NavigationProperty Name="members" Type="Collection(FunOrgService.Members)" Partner="activityGroup">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Members">
+                <Key>
+                    <PropertyRef Name="activityGroup_name"/>
+                    <PropertyRef Name="user_name"/>
+                </Key>
+                <NavigationProperty Name="activityGroup" Type="FunOrgService.ActivityGroup" Partner="members">
+                    <ReferentialConstraint Property="activityGroup_name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="activityGroup_name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <NavigationProperty Name="user" Type="FunOrgService.User" Partner="members">
+                    <ReferentialConstraint Property="user_name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="user_name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+            </EntityType>
+            <Annotations Target="FunOrgService.Activity/ID">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+                <Annotation Term="Common.Text" Path="description"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.Activity/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.Activity/description">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/gender">
+                <Annotation Term="Common.Label" String="Gender"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/birthYear">
+                <Annotation Term="Common.Label" String="Year of Birth"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/location">
+                <Annotation Term="Common.Label" String="Location"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.ActivityGroup/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.ActivityGroup/activity">
+                <Annotation Term="Common.Label" String="Activity"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.ActivityGroup/activity_ID">
+                <Annotation Term="Common.Label" String="Activity"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.ActivityGroup/description">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.ActivityGroup/owner_name">
+                <Annotation Term="Common.Label" String="Owner"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

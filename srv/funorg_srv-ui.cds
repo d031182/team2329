@@ -21,6 +21,7 @@ annotate FunOrgService.User with {
 
 
 annotate FunOrgService.User with @(UI: {
+    Identification  : [{Value: name}],
     HeaderInfo      : {
         TypeName      : 'User',
         TypeNamePlural: 'Users',
@@ -39,7 +40,7 @@ annotate FunOrgService.User with @(UI: {
         {Value: location},
         {Value: gender},
         {Value: birthYear},
-        {Value: interest_ID},        
+        {Value: interest_ID},
     // {Value: miti_ID},
     // {
     //     Value      : prio,
@@ -50,50 +51,50 @@ annotate FunOrgService.User with @(UI: {
     //     Criticality: criticality
     // }
     ],
-    Facets          : [{
-        $Type : 'UI.ReferenceFacet',
-        Label : 'Properties',
-        Target: '@UI.FieldGroup#Main'
-    }],
+    Facets          : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Label : 'Memberships',
+            Target: 'members/@UI.LineItem'
+        // Target: '@UI.FieldGroup#Main'
+        },
+        // {
+        //     $Type : 'UI.ReferenceFacet',
+        //     Label : 'Ownerships',
+        //     Target: 'activityGroup'
+        // },
+    ],
     FieldGroup #Main: {Data: [
         {Value: location},
         {Value: gender},
         {Value: birthYear},
         {Value: interest_ID},
-    // {Value: name,
-    //                             // Criticality: criticality
-    //         },
-    // {
-    //     Value      : impact,
-    //     Criticality: criticality
-    // }
     ]}
 }, ) {
 
 };
 
-annotate FunOrgService.User with {
-    interest @(Common: {
-        //show text, not id for mitigation in the context of risks
-        Text           : interest.name,
-        TextArrangement: #TextOnly,
-        ValueList      : {
-            Label         : 'Interest',
-            CollectionPath: 'Category',
-            Parameters    : [
-                {
-                    $Type            : 'Common.ValueListParameterInOut',
-                    LocalDataProperty: interest_ID,
-                    ValueListProperty: 'interest_ID'
-                },
-                // {
-                //     $Type            : 'Common.ValueListParameterDisplayOnly',
-                //     ValueListProperty: 'user_name'
-                // }
-            ]
-        }
-    });
-}
+// annotate FunOrgService.User with {
+//     interest @(Common: {
+//         //show text, not id for mitigation in the context of risks
+//         Text           : interest.name,
+//         TextArrangement: #TextOnly,
+//         ValueList      : {
+//             Label         : 'Interest',
+//             CollectionPath: 'Category',
+//             Parameters    : [{
+//                 $Type            : 'Common.ValueListParameterInOut',
+//                 LocalDataProperty: interest_ID,
+//                 ValueListProperty: 'interest_ID'
+//             },
+//             // {
+//             //     $Type            : 'Common.ValueListParameterDisplayOnly',
+//             //     ValueListProperty: 'user_name'
+//             // }
+//             ]
+//         }
+//     });
+// }
 
 annotate FunOrgService.ActivityGroup with {
     name        @title: 'Name';
@@ -101,3 +102,56 @@ annotate FunOrgService.ActivityGroup with {
     description @title: 'Description';
     owner_name  @title: 'Owner';
 }
+
+annotate FunOrgService.ActivityGroup with @(UI: {
+    HeaderInfo: {
+        TypeName      : 'User',
+        TypeNamePlural: 'Users',
+        Title         : {
+            $Type: 'UI.DataField',
+            Value: name
+        },
+        Description   : {
+            $Type: 'UI.DataField',
+            Value: description
+        }
+    },
+    Facets    : [{
+        $Type : 'UI.ReferenceFacet',
+        Label : 'Properties',
+        Target: 'members/@UI.LineItem'
+    }],
+}, ) {
+
+};
+
+
+annotate FunOrgService.Members with {
+    user          @title: 'User';
+    activityGroup @title: 'Activity Group';
+}
+
+
+annotate FunOrgService.Members with @(
+    Common.SemanticKey: [
+        user_name,
+        activityGroup_name
+    ],
+    UI                : {
+        // HeaderInfo: {
+        //     TypeName      : '{i18n>Membership}',
+        //     TypeNamePlural: '{i18n>Memberships}',
+        //     Title         : {Value: activityGroup_name},
+        // },
+        LineItem        : [
+            {Value: user_name},
+            {Value: activityGroup_name},
+        ],
+        // Facets          : [{
+        //     $Type : 'UI.ReferenceFacet',
+        //     // Label : 'Properties',
+        //     // Target: 'activityGroup/@UI.HeaderInfo'
+        //     Target: 'activityGroup/members/@UI.LineItem'
+        // }],
+    }
+) {};
