@@ -8,3 +8,5 @@ using from './activity/annotations';
 using from './activity/annotations';
 
 using from './activity_group/annotations';
+
+using from './user/annotations';

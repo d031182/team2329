@@ -9,68 +9,68 @@ using FunOrgService from './funorg_srv';
 // }
 
 
-annotate FunOrgService.User with {
-    name        @title: 'Name';
-    gender      @title: 'Gender';
-    location    @title: 'Location';
-    interest_ID @title: 'Interest';
-    birthYear   @title: 'Year of Birth';
-    members     @title: 'Members';
-}
+// annotate FunOrgService.User with {
+//     name        @title: 'Name';
+//     gender      @title: 'Gender';
+//     location    @title: 'Location';
+//     interest_ID @title: 'Interest';
+//     birthYear   @title: 'Year of Birth';
+//     members     @title: 'Members';
+// }
 
 
-annotate FunOrgService.User with @(UI: {
-    Identification  : [{Value: name}],
-    HeaderInfo      : {
-        TypeName      : 'User',
-        TypeNamePlural: 'Users',
-        Title         : {
-            $Type: 'UI.DataField',
-            Value: name
-        },
-        Description   : {
-            $Type: 'UI.DataField',
-            Value: interest_ID
-        }
-    },
-    // SelectionFields : [interest_ID],
-    LineItem        : [
-        {Value: name},
-        {Value: location},
-        {Value: gender},
-        {Value: birthYear},
-        {Value: interest_ID},
-    // {Value: miti_ID},
-    // {
-    //     Value      : prio,
-    //     Criticality: criticality
-    // },
-    // {
-    //     Value      : impact,
-    //     Criticality: criticality
-    // }
-    ],
-    Facets          : [{
-        $Type : 'UI.ReferenceFacet',
-        Label : 'Memberships',
-        Target: 'members/@UI.LineItem'
-    // Target: '@UI.FieldGroup#Main'
-    },
-    // {
-    //     $Type : 'UI.ReferenceFacet',
-    //     Label : 'Ownerships',
-    //     Target: 'activityGroup'
-    // },
-    ],
-    FieldGroup #Main: {Data: [
-        {Value: location},
-        {Value: gender},
-        {Value: birthYear},
-        {Value: interest_ID},
-    ]}
-}, ) {
+// annotate FunOrgService.User with @(UI: {
+//     Identification  : [{Value: name}],
+//     HeaderInfo      : {
+//         TypeName      : 'User',
+//         TypeNamePlural: 'Users',
+//         Title         : {
+//             $Type: 'UI.DataField',
+//             Value: name
+//         },
+//         Description   : {
+//             $Type: 'UI.DataField',
+//             Value: interest_ID
+//         }
+//     },
+//     // SelectionFields : [interest_ID],
+//     LineItem        : [
+//         {Value: name},
+//         {Value: location},
+//         {Value: gender},
+//         {Value: birthYear},
+//         {Value: interest_ID},
+//     // {Value: miti_ID},
+//     // {
+//     //     Value      : prio,
+//     //     Criticality: criticality
+//     // },
+//     // {
+//     //     Value      : impact,
+//     //     Criticality: criticality
+//     // }
+//     ],
+//     Facets          : [{
+//         $Type : 'UI.ReferenceFacet',
+//         Label : 'Memberships',
+//         Target: 'members/@UI.LineItem'
+//     // Target: '@UI.FieldGroup#Main'
+//     },
+//     // {
+//     //     $Type : 'UI.ReferenceFacet',
+//     //     Label : 'Ownerships',
+//     //     Target: 'activityGroup'
+//     // },
+//     ],
+//     FieldGroup #Main: {Data: [
+//         {Value: location},
+//         {Value: gender},
+//         {Value: birthYear},
+//         {Value: interest_ID},
+//     ]}
+// }, ) {
 
-};
+// };
 
 // annotate FunOrgService.User with {
 //     interest @(Common: {

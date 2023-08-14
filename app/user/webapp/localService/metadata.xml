@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="FunOrgService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="Activity" EntityType="FunOrgService.Activity"/>
+                <EntitySet Name="User" EntityType="FunOrgService.User">
+                    <NavigationPropertyBinding Path="members" Target="Members"/>
+                </EntitySet>
+                <EntitySet Name="ActivityGroup" EntityType="FunOrgService.ActivityGroup">
+                    <NavigationPropertyBinding Path="activity" Target="Activity"/>
+                    <NavigationPropertyBinding Path="owner" Target="User"/>
+                    <NavigationPropertyBinding Path="members" Target="Members"/>
+                </EntitySet>
+                <EntitySet Name="Members" EntityType="FunOrgService.Members">
+                    <NavigationPropertyBinding Path="activityGroup" Target="ActivityGroup"/>
+                    <NavigationPropertyBinding Path="user" Target="User"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="Activity">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="30"/>
+                <Property Name="description" Type="Edm.String" MaxLength="256"/>
+                <Property Name="date" Type="Edm.Date"/>
+                <Property Name="location" Type="Edm.String" MaxLength="30"/>
+                <Property Name="category_ID" Type="Edm.String" MaxLength="5"/>
+            </EntityType>
+            <EntityType Name="User">
+                <Key>
+                    <PropertyRef Name="name"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <Property Name="gender" Type="Edm.String" MaxLength="1"/>
+                <Property Name="birthYear" Type="Edm.Int32"/>
+                <Property Name="location" Type="Edm.String" MaxLength="30"/>
+                <Property Name="interest_ID" Type="Edm.String" MaxLength="5"/>
+                <NavigationProperty Name="members" Type="Collection(FunOrgService.Members)" Partner="user">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="ActivityGroup">
+                <Key>
+                    <PropertyRef Name="name"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <NavigationProperty Name="activity" Type="FunOrgService.Activity">
+                    <ReferentialConstraint Property="activity_ID" ReferencedProperty="ID"/>
+                </NavigationProperty>
+                <Property Name="activity_ID" Type="Edm.Int32"/>
+                <Property Name="description" Type="Edm.String" MaxLength="256"/>
+                <NavigationProperty Name="owner" Type="FunOrgService.User">
+                    <ReferentialConstraint Property="owner_name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="owner_name" Type="Edm.String" MaxLength="30"/>
+                <NavigationProperty Name="members" Type="Collection(FunOrgService.Members)" Partner="activityGroup">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="Members">
+                <Key>
+                    <PropertyRef Name="activityGroup_name"/>
+                    <PropertyRef Name="user_name"/>
+                </Key>
+                <NavigationProperty Name="activityGroup" Type="FunOrgService.ActivityGroup" Partner="members">
+                    <ReferentialConstraint Property="activityGroup_name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="activityGroup_name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+                <NavigationProperty Name="user" Type="FunOrgService.User" Partner="members">
+                    <ReferentialConstraint Property="user_name" ReferencedProperty="name"/>
+                </NavigationProperty>
+                <Property Name="user_name" Type="Edm.String" MaxLength="30" Nullable="false"/>
+            </EntityType>
+            <Annotations Target="FunOrgService.User">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="User"/>
+                        <PropertyValue Property="TypeNamePlural" String="Users"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="name"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="interest_ID"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="location"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="gender"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="birthYear"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="interest_ID"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Label" String="Memberships"/>
+                            <PropertyValue Property="Target" AnnotationPath="members/@UI.LineItem"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="Main">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="location"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="gender"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="birthYear"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="interest_ID"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/name">
+                <Annotation Term="Common.Label" String="Name"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/gender">
+                <Annotation Term="Common.Label" String="Gender"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/birthYear">
+                <Annotation Term="Common.Label" String="Year of Birth"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/location">
+                <Annotation Term="Common.Label" String="Location"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/interest_ID">
+                <Annotation Term="Common.Label" String="Interest"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.User/members">
+                <Annotation Term="Common.Label" String="Members"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.Members">
+                <Annotation Term="Common.SemanticKey">
+                    <Collection>
+                        <PropertyPath>user_name</PropertyPath>
+                        <PropertyPath>activityGroup_name</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="user_name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="activityGroup_name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="FunOrgService.Members/activityGroup">
+                <Annotation Term="Common.Label" String="Activity Group"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.Members/activityGroup_name">
+                <Annotation Term="Common.Label" String="Activity Group"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.Members/user">
+                <Annotation Term="Common.Label" String="User"/>
+            </Annotations>
+            <Annotations Target="FunOrgService.Members/user_name">
+                <Annotation Term="Common.Label" String="User"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
