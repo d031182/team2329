@@ -1,12 +1,11 @@
 using FunOrgService from './funorg_srv';
 
 annotate FunOrgService.Activity with {
-    ID          @(
-        UI.Hidden,
-        Common: {Text: description}
-    );
     name        @title: 'Name';
     description @title: 'Description';
+    date        @title: 'Date';
+    location    @title: 'Location';
+    category    @title: 'Category';
 }
 
 
@@ -51,18 +50,17 @@ annotate FunOrgService.User with @(UI: {
     //     Criticality: criticality
     // }
     ],
-    Facets          : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            Label : 'Memberships',
-            Target: 'members/@UI.LineItem'
-        // Target: '@UI.FieldGroup#Main'
-        },
-        // {
-        //     $Type : 'UI.ReferenceFacet',
-        //     Label : 'Ownerships',
-        //     Target: 'activityGroup'
-        // },
+    Facets          : [{
+        $Type : 'UI.ReferenceFacet',
+        Label : 'Memberships',
+        Target: 'members/@UI.LineItem'
+    // Target: '@UI.FieldGroup#Main'
+    },
+    // {
+    //     $Type : 'UI.ReferenceFacet',
+    //     Label : 'Ownerships',
+    //     Target: 'activityGroup'
+    // },
     ],
     FieldGroup #Main: {Data: [
         {Value: location},
@@ -138,20 +136,20 @@ annotate FunOrgService.Members with @(
         activityGroup_name
     ],
     UI                : {
-        // HeaderInfo: {
-        //     TypeName      : '{i18n>Membership}',
-        //     TypeNamePlural: '{i18n>Memberships}',
-        //     Title         : {Value: activityGroup_name},
-        // },
-        LineItem        : [
-            {Value: user_name},
-            {Value: activityGroup_name},
-        ],
-        // Facets          : [{
-        //     $Type : 'UI.ReferenceFacet',
-        //     // Label : 'Properties',
-        //     // Target: 'activityGroup/@UI.HeaderInfo'
-        //     Target: 'activityGroup/members/@UI.LineItem'
-        // }],
+                         // HeaderInfo: {
+                         //     TypeName      : '{i18n>Membership}',
+                         //     TypeNamePlural: '{i18n>Memberships}',
+                         //     Title         : {Value: activityGroup_name},
+                         // },
+                        LineItem: [
+        {Value: user_name},
+        {Value: activityGroup_name},
+    ],
+    // Facets          : [{
+    //     $Type : 'UI.ReferenceFacet',
+    //     // Label : 'Properties',
+    //     // Target: 'activityGroup/@UI.HeaderInfo'
+    //     Target: 'activityGroup/members/@UI.LineItem'
+    // }],
     }
 ) {};

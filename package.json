@@ -9,9 +9,9 @@
     "@sap/cds": "^6",
     "@sap/cds-hana": "^2",
     "@sap/hdi-deploy": "^4.6.1",
+    "@sap/xssec": "^3",
     "express": "^4",
     "hdb": "^0.19.0",
-    "@sap/xssec": "^3",
     "passport": "^0"
   },
   "scripts": {
@@ -20,7 +20,8 @@
     "undeploy": "cf undeploy FunOrganizer --delete-services --delete-service-keys --delete-service-brokers",
     "build": "rimraf resources mta_archives && mbt build --mtar archive",
     "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
-    "watch-project_st1": "cds watch --open project_st1/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-project_st1": "cds watch --open project_st1/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-activity": "cds watch --open activity/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "cds": {
     "build": {
@@ -53,7 +54,9 @@
   },
   "sapux": [
     "app/project1",
-    "app/project_st1"
+    "app/project_st1",
+    "app/activity",
+    "app/activity"
   ],
   "devDependencies": {
     "@sap/ux-specification": "^1.108.11",

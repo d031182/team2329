@@ -3,7 +3,7 @@ namespace app.datamodels;
 // using { Country } from '@sap/cds/common';
 // type BusinessKey : String(10);
 // type SDate : DateTime;
-// type LText : String(1024);
+// type LText : String(1024); 
 
 entity Activity {
     key ID          : Integer;

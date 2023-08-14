@@ -1,7 +1,7 @@
 {
     "_version": "1.49.0",
     "sap.app": {
-        "id": "funorg.projectst1",
+        "id": "ns.activity",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -13,7 +13,7 @@
         "sourceTemplate": {
             "id": "@sap/generator-fiori:lrop",
             "version": "1.10.4",
-            "toolsId": "9997b17d-3cd0-4af0-8b51-5e0a7aa7e287"
+            "toolsId": "7619be5a-53a6-4142-9c74-888c0a3bf203"
         },
         "dataSources": {
             "mainService": {
@@ -46,7 +46,7 @@
     "sap.ui5": {
         "flexEnabled": true,
         "dependencies": {
-            "minUI5Version": "1.116.0",
+            "minUI5Version": "1.117.0",
             "libs": {
                 "sap.m": {},
                 "sap.ui.core": {},
@@ -62,7 +62,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "funorg.projectst1.i18n.i18n"
+                    "bundleName": "ns.activity.i18n.i18n"
                 }
             },
             "": {
@@ -87,66 +87,54 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "UserList",
-                    "target": "UserList"
+                    "name": "ActivityList",
+                    "target": "ActivityList"
                 },
                 {
-                    "pattern": "User({key}):?query:",
-                    "name": "UserObjectPage",
-                    "target": "UserObjectPage"
-                },
-                {
-                    "pattern": "User({key})/members({key2}):?query:",
-                    "name": "MembersObjectPage",
-                    "target": "MembersObjectPage"
+                    "pattern": "Activity({key}):?query:",
+                    "name": "ActivityObjectPage",
+                    "target": "ActivityObjectPage"
                 }
             ],
             "targets": {
-                "UserList": {
+                "ActivityList": {
                     "type": "Component",
-                    "id": "UserList",
+                    "id": "ActivityList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "User",
+                            "entitySet": "Activity",
                             "variantManagement": "Page",
                             "navigation": {
-                                "User": {
+                                "Activity": {
                                     "detail": {
-                                        "route": "UserObjectPage"
-                                    }
-                                }
-                            },
-                            "initialLoad": "Enabled"
-                        }
-                    }
-                },
-                "UserObjectPage": {
-                    "type": "Component",
-                    "id": "UserObjectPage",
-                    "name": "sap.fe.templates.ObjectPage",
-                    "options": {
-                        "settings": {
-                            "editableHeaderContent": true,
-                            "entitySet": "User",
-                            "navigation": {
-                                "members": {
-                                    "detail": {
-                                        "route": "MembersObjectPage"
+                                        "route": "ActivityObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "MembersObjectPage": {
+                "ActivityObjectPage": {
                     "type": "Component",
-                    "id": "MembersObjectPage",
+                    "id": "ActivityObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
-                            "editableHeaderContent": true,
-                            "entitySet": "Members"
+                            "editableHeaderContent": false,
+                            "entitySet": "Activity",
+                            "content": {
+                                "header": {
+                                    "actions": {
+                                        "actionCreateActivityGroup": {
+                                            "press": "ns.activity.ext.controller.ActivityController.createActivityGroup",
+                                            "visible": true,
+                                            "enabled": true,
+                                            "text": "Create Activity Group"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
