@@ -26,7 +26,7 @@ annotate service.Activity with @(UI.LineItem: [
         Label: 'Location',
         Value: location,
     },
-        {
+    {
         $Type: 'UI.DataField',
         Label: 'Category',
         Value: category_ID,
@@ -44,13 +44,28 @@ annotate service.Activity with @(
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'name',
+                Label: 'Name',
                 Value: name,
             },
             {
                 $Type: 'UI.DataField',
-                Label: 'description',
+                Label: 'Description',
                 Value: description,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'Date',
+                Value: date,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'Location',
+                Value: location,
+            },
+            {
+                $Type: 'UI.DataField',
+                Label: 'Category',
+                Value: category_ID,
             },
         ],
     },
@@ -61,3 +76,12 @@ annotate service.Activity with @(
         Target: '@UI.FieldGroup#GeneratedGroup1',
     }, ]
 );
+
+annotate service.Activity with @(UI.HeaderInfo: {
+    Title         : {
+        $Type: 'UI.DataField',
+        Value: name,
+    },
+    TypeName      : '',
+    TypeNamePlural: '',
+});

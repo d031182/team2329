@@ -130,7 +130,10 @@
                                             "press": "ns.activity.ext.controller.ActivityController.createActivityGroup",
                                             "visible": true,
                                             "enabled": true,
-                                            "text": "Create Activity Group"
+                                            "text": "Create Activity Group",
+                                            "position": {
+                                                "placement": "Before"
+                                            }
                                         }
                                     }
                                 }
