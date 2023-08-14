@@ -96,15 +96,15 @@ annotate FunOrgService.User with @(UI: {
 
 annotate FunOrgService.ActivityGroup with {
     name        @title: 'Name';
-    activity    @title: 'Activity';
     description @title: 'Description';
     owner_name  @title: 'Owner';
+    activity    @title: 'Activity';
 }
 
 annotate FunOrgService.ActivityGroup with @(UI: {
     HeaderInfo: {
-        TypeName      : 'User',
-        TypeNamePlural: 'Users',
+        TypeName      : 'Activity Group',
+        TypeNamePlural: 'Activity Groups',
         Title         : {
             $Type: 'UI.DataField',
             Value: name
@@ -116,7 +116,7 @@ annotate FunOrgService.ActivityGroup with @(UI: {
     },
     Facets    : [{
         $Type : 'UI.ReferenceFacet',
-        Label : 'Properties',
+        Label : 'Members',
         Target: 'members/@UI.LineItem'
     }],
 }, ) {
